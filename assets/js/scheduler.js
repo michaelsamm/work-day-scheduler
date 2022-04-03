@@ -1,12 +1,3 @@
-// 9a - 5p
-// Timeblocks
-// Each timeblock contains input field and save button
-// Save adds to local storage
-// Current day is displayed at top of calendar
-// Timeblocks are color coded
-
-
-
 // Set today's date
 var setDate = function() {
     // Add current date to the header
