@@ -5,14 +5,16 @@
 // Current day is displayed at top of calendar
 // Timeblocks are color coded
 
-// Show live time in header
 
-// moment().set('hour', startTime + i);
 
-// Add current date to the header
-var today = moment().format("dddd, MMMM Do YYYY h:mm a");
-// Add date to element
-$("#currentDay").append(today);
+// Set today's date
+var setDate = function() {
+    // Add current date to the header
+    var today = moment().format("dddd, MMMM Do YYYY h:mm a");
+    // Add date to element
+    $("#currentDay").text(today);
+}
+
 
 // Create Time Blocks
 var timeBlocks = function() {
@@ -28,7 +30,7 @@ var timeBlocks = function() {
             .attr("id", startTime + i);
         // Create time label for block
         var timeEl = $("<div>")
-            .addClass("hour col-2")
+            .addClass("hour col-2 pt-2")
             .text(time);
         // Create schedule entry area for block
         var scheduleEl = $("<textarea>")
@@ -44,7 +46,6 @@ var timeBlocks = function() {
         saveEl.append(saveIcon);
         timeBlock.append(timeEl, scheduleEl, saveEl);
         $(".container").append(timeBlock);
-        console.log($(".container"));
     }
 }
 
@@ -58,6 +59,15 @@ var saveSchedule = function() {
         // Save to localStorage
         localStorage.setItem(time, text);
     })
+}
+
+// Load schedule from local storage
+var loadSchedule = function() {
+    for (i = 0; i < 9; i++) {
+        var timeId = i + 9;
+        var plans = localStorage.getItem(timeId);
+        $("#" + timeId).children(".description").val(plans);
+    }
 }
 
 // Set colors for each block
@@ -85,6 +95,10 @@ var timeColors = function() {
 
 
 // Callbacks
+setDate();
 timeBlocks();
 saveSchedule();
+loadSchedule();
+timeColors();
 setInterval(timeColors, 1000);
+setInterval(setDate, 60000);
